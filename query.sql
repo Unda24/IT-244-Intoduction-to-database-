@@ -83,3 +83,34 @@ CREATE TABLE Appointment (
     CONSTRAINT uq_doctor_appointment_slot
         UNIQUE (Doctor_ID, Appointment_Date, Appointment_Time)
 ) ENGINE = InnoDB;
+CREATE TABLE Treatment (
+    Treatment_ID INT UNSIGNED AUTO_INCREMENT,
+    Appointment_ID INT UNSIGNED NOT NULL,
+    Diagnosis VARCHAR(255) NOT NULL,
+    Treatment_Description VARCHAR(500) NOT NULL,
+    Treatment_Date DATE NOT NULL,
+    Notes VARCHAR(500),
+    Treatment_Cost DECIMAL(10,2) NOT NULL,
+    CONSTRAINT pk_treatment PRIMARY KEY (Treatment_ID),
+    CONSTRAINT uq_treatment_appointment UNIQUE (Appointment_ID),
+    CONSTRAINT fk_treatment_appointment
+        FOREIGN KEY (Appointment_ID)
+        REFERENCES Appointment (Appointment_ID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT chk_treatment_cost
+        CHECK (Treatment_Cost >= 0)
+) ENGINE = InnoDB;
+
+CREATE TABLE Medicine (
+    Medicine_ID INT UNSIGNED AUTO_INCREMENT,
+    Medicine_Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255),
+    Unit_Price DECIMAL(8,2) NOT NULL,
+    Stock_Quantity INT UNSIGNED NOT NULL DEFAULT 0,
+    Expiry_Date DATE NOT NULL,
+    CONSTRAINT pk_medicine PRIMARY KEY (Medicine_ID),
+    CONSTRAINT uq_medicine_name UNIQUE (Medicine_Name),
+    CONSTRAINT chk_medicine_price
+        CHECK (Unit_Price >= 0)
+) ENGINE = InnoDB;
