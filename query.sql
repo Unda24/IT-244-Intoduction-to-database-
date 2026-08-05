@@ -60,3 +60,26 @@ CREATE TABLE Patient (
     CONSTRAINT chk_patient_national_id
         CHECK (National_ID REGEXP '^[12][0-9]{9}$')
 ) ENGINE = InnoDB;
+CREATE TABLE Appointment (
+    Appointment_ID INT UNSIGNED AUTO_INCREMENT,
+    Patient_ID INT UNSIGNED NOT NULL,
+    Doctor_ID INT UNSIGNED NOT NULL,
+    Appointment_Date DATE NOT NULL,
+    Appointment_Time TIME NOT NULL,
+    Reason VARCHAR(255) NOT NULL,
+    Status ENUM('Scheduled', 'Completed', 'Cancelled', 'Missed') NOT NULL
+        DEFAULT 'Scheduled',
+    CONSTRAINT pk_appointment PRIMARY KEY (Appointment_ID),
+    CONSTRAINT fk_appointment_patient
+        FOREIGN KEY (Patient_ID)
+        REFERENCES Patient (Patient_ID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_appointment_doctor
+        FOREIGN KEY (Doctor_ID)
+        REFERENCES Doctor (Doctor_ID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT uq_doctor_appointment_slot
+        UNIQUE (Doctor_ID, Appointment_Date, Appointment_Time)
+) ENGINE = InnoDB;
