@@ -39,3 +39,24 @@ CREATE TABLE Admin_Staff (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
+CREATE TABLE Patient (
+    Patient_ID INT UNSIGNED AUTO_INCREMENT,
+    National_ID CHAR(10) NOT NULL,
+    First_Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL,
+    Date_of_Birth DATE NOT NULL,
+    Gender ENUM('Male', 'Female') NOT NULL,
+    Phone VARCHAR(15) NOT NULL,
+    Email VARCHAR(100),
+    City VARCHAR(50) NOT NULL,
+    Address VARCHAR(200),
+    Blood_Type ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+    CONSTRAINT pk_patient PRIMARY KEY (Patient_ID),
+    CONSTRAINT uq_patient_national_id UNIQUE (National_ID),
+    CONSTRAINT uq_patient_phone UNIQUE (Phone),
+    CONSTRAINT uq_patient_email UNIQUE (Email),
+    CONSTRAINT chk_patient_phone
+        CHECK (Phone REGEXP '^05[0-9]{8}$'),
+    CONSTRAINT chk_patient_national_id
+        CHECK (National_ID REGEXP '^[12][0-9]{9}$')
+) ENGINE = InnoDB;
