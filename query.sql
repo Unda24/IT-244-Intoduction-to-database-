@@ -114,3 +114,57 @@ CREATE TABLE Medicine (
     CONSTRAINT chk_medicine_price
         CHECK (Unit_Price >= 0)
 ) ENGINE = InnoDB;
+
+CREATE TABLE Prescription (
+    Prescription_ID INT UNSIGNED AUTO_INCREMENT,
+    Treatment_ID INT UNSIGNED NOT NULL,
+    Medicine_ID INT UNSIGNED NOT NULL,
+    Dosage VARCHAR(80) NOT NULL,
+    Frequency VARCHAR(80) NOT NULL,
+    Duration_Days SMALLINT UNSIGNED NOT NULL,
+    Instructions VARCHAR(255),
+    Quantity SMALLINT UNSIGNED NOT NULL,
+    CONSTRAINT pk_prescription PRIMARY KEY (Prescription_ID),
+    CONSTRAINT uq_treatment_medicine UNIQUE (Treatment_ID, Medicine_ID),
+    CONSTRAINT fk_prescription_treatment
+        FOREIGN KEY (Treatment_ID)
+        REFERENCES Treatment (Treatment_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_prescription_medicine
+        FOREIGN KEY (Medicine_ID)
+        REFERENCES Medicine (Medicine_ID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT chk_duration_days
+        CHECK (Duration_Days > 0),
+    CONSTRAINT chk_prescription_quantity
+        CHECK (Quantity > 0)
+) ENGINE = InnoDB;
+
+CREATE TABLE Payment (
+    Payment_ID INT UNSIGNED AUTO_INCREMENT,
+    Treatment_ID INT UNSIGNED NOT NULL,
+    Payment_Date DATE,
+    Amount DECIMAL(10,2) NOT NULL,
+    Payment_Method ENUM('Cash', 'Card', 'Mada', 'Apple Pay', 'Insurance') NOT NULL,
+    Payment_Status ENUM('Pending', 'Partially Paid', 'Paid') NOT NULL
+        DEFAULT 'Pending',
+    Transaction_Reference VARCHAR(50),
+    CONSTRAINT pk_payment PRIMARY KEY (Payment_ID),
+    CONSTRAINT uq_payment_treatment UNIQUE (Treatment_ID),
+    CONSTRAINT uq_payment_reference UNIQUE (Transaction_Reference),
+    CONSTRAINT fk_payment_treatment
+        FOREIGN KEY (Treatment_ID)
+        REFERENCES Treatment (Treatment_ID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT chk_payment_amount
+        CHECK (Amount >= 0),
+    CONSTRAINT chk_payment_date_status
+        CHECK (
+            (Payment_Status = 'Pending' AND Payment_Date IS NULL)
+            OR
+            (Payment_Status IN ('Partially Paid', 'Paid') AND Payment_Date IS NOT NULL)
+        )
+) ENGINE = InnoDB;
