@@ -115,7 +115,7 @@ CREATE TABLE Medicine (
         CHECK (Unit_Price >= 0)
 ) ENGINE = InnoDB;
 
-CREATE TABLE Prescription (
+CREATE TABLE Prescription ( 
     Prescription_ID INT UNSIGNED AUTO_INCREMENT,
     Treatment_ID INT UNSIGNED NOT NULL,
     Medicine_ID INT UNSIGNED NOT NULL,
