@@ -237,7 +237,7 @@ VALUES
     (4, 'Amlodipine 5 mg', 'Blood-pressure control tablets', 28.00, 150, '2028-01-31'),
     (5, 'Paracetamol 500 mg', 'Pain-relief and fever-reduction tablets', 8.50, 300, '2028-03-31');
 
-INSERT INTO Prescription
+INSERT INTO Prescription 
     (Prescription_ID, Treatment_ID, Medicine_ID, Dosage, Frequency, Duration_Days, Instructions, Quantity)
 VALUES
     (1, 1, 1, 'One capsule', 'Once weekly', 56, 'Take after a main meal', 8),
