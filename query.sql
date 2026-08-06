@@ -245,3 +245,25 @@ VALUES
     (3, 3, 3, 'Apply a thin layer', 'Twice daily', 10, 'For external use only', 1),
     (4, 4, 4, 'One tablet', 'Once daily', 30, 'Take at the same time each day', 30),
     (5, 5, 5, 'Two tablets', 'Every eight hours when needed', 5, 'Do not exceed eight tablets in 24 hours', 20);
+
+INSERT INTO Payment
+    (Payment_ID, Treatment_ID, Payment_Date, Amount, Payment_Method, Payment_Status, Transaction_Reference)
+VALUES
+    (1, 1, '2026-07-05', 250.00, 'Mada', 'Paid', 'TXN-SA-20260705-001'),
+    (2, 2, '2026-07-06', 300.00, 'Card', 'Paid', 'TXN-SA-20260706-002'),
+    (3, 3, '2026-07-07', 350.00, 'Apple Pay', 'Paid', 'TXN-SA-20260707-003'),
+    (4, 4, '2026-07-08', 160.00, 'Insurance', 'Partially Paid', 'TXN-SA-20260708-004'),
+    (5, 5, NULL, 400.00, 'Cash', 'Pending', NULL);
+
+-- UPDATE statement: Settle pending payment for Payment_ID = 5
+UPDATE Payment
+SET
+    Payment_Date = '2026-07-10',
+    Payment_Method = 'Mada',
+    Payment_Status = 'Paid',
+    Transaction_Reference = 'TXN-SA-20260710-005'
+WHERE Payment_ID = 5;
+
+-- DELETE statement: Remove prescription record 5 for testing foreign keys
+DELETE FROM Prescription
+WHERE Prescription_ID = 5;
