@@ -201,3 +201,21 @@ VALUES
     (8, 'Medical Records', 'Records Officer'),
     (9, 'Human Resources', 'HR Coordinator'),
     (10, 'Administration', 'Clinic Supervisor');
+INSERT INTO Patient
+    (Patient_ID, National_ID, First_Name, Last_Name, Date_of_Birth,
+     Gender, Phone, Email, City, Address, Blood_Type)
+VALUES
+    (1, '1023456789', 'Abdullah', 'Alzahrani', '1992-04-16', 'Male', '0509876543', 'abdullah.alzahrani@example.sa', 'Riyadh', 'Al Malqa District, Riyadh', 'O+'),
+    (2, '1098765432', 'Sara', 'Alharbi', '1988-11-03', 'Female', '0518765432', 'sara.alharbi@example.sa', 'Jeddah', 'Al Rawdah District, Jeddah', 'A+'),
+    (3, '1122334455', 'Mohammed', 'Alqahtani', '2001-07-22', 'Male', '0527654321', 'mohammed.alqahtani@example.sa', 'Dammam', 'Al Faisaliyah District, Dammam', 'B+'),
+    (4, '1234567890', 'Norah', 'Alotaibi', '1996-02-10', 'Female', '0536543210', 'norah.alotaibi@example.sa', 'Makkah', 'Al Aziziyah District, Makkah', 'AB+'),
+    (5, '1987654321', 'Fahad', 'Alshammari', '1979-09-28', 'Male', '0545432109', 'fahad.alshammari@example.sa', 'Madinah', 'Qurban District, Madinah', 'O-');
+
+INSERT INTO Appointment
+    (Appointment_ID, Patient_ID, Doctor_ID, Appointment_Date, Appointment_Time, Reason, Status)
+VALUES
+    (1, 1, 1, '2026-07-05', '09:00:00', 'Routine health examination', 'Completed'),
+    (2, 2, 2, '2026-07-06', '10:30:00', 'Child fever and sore throat', 'Completed'),
+    (3, 3, 3, '2026-07-07', '12:00:00', 'Persistent skin rash', 'Completed'),
+    (4, 4, 4, '2026-07-08', '14:00:00', 'Fatigue and high blood pressure', 'Completed'),
+    (5, 5, 5, '2026-07-09', '16:30:00', 'Knee pain after exercise', 'Completed');
