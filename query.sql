@@ -219,3 +219,29 @@ VALUES
     (3, 3, 3, '2026-07-07', '12:00:00', 'Persistent skin rash', 'Completed'),
     (4, 4, 4, '2026-07-08', '14:00:00', 'Fatigue and high blood pressure', 'Completed'),
     (5, 5, 5, '2026-07-09', '16:30:00', 'Knee pain after exercise', 'Completed');
+INSERT INTO Treatment
+    (Treatment_ID, Appointment_ID, Diagnosis, Treatment_Description, Treatment_Date, Notes, Treatment_Cost)
+VALUES
+    (1, 1, 'Vitamin D deficiency', 'Clinical evaluation and vitamin D replacement plan', '2026-07-05', 'Follow-up laboratory test recommended after eight weeks', 250.00),
+    (2, 2, 'Acute bacterial tonsillitis', 'Antibiotic treatment with fever management instructions', '2026-07-06', 'Return if symptoms do not improve within three days', 300.00),
+    (3, 3, 'Allergic dermatitis', 'Topical treatment and avoidance of identified irritants', '2026-07-07', 'Use fragrance-free skin products', 350.00),
+    (4, 4, 'Primary hypertension', 'Blood-pressure management plan and lifestyle counselling', '2026-07-08', 'Record blood pressure twice daily', 320.00),
+    (5, 5, 'Mild knee sprain', 'Rest, cold compress, pain management, and physiotherapy advice', '2026-07-09', 'Avoid strenuous exercise for two weeks', 400.00);
+
+INSERT INTO Medicine
+    (Medicine_ID, Medicine_Name, Description, Unit_Price, Stock_Quantity, Expiry_Date)
+VALUES
+    (1, 'Vitamin D3 50000 IU', 'Weekly vitamin D soft-gel capsules', 18.00, 120, '2027-12-31'),
+    (2, 'Amoxicillin 500 mg', 'Oral antibiotic capsules', 22.50, 200, '2027-06-30'),
+    (3, 'Hydrocortisone Cream 1%', 'Topical corticosteroid cream', 16.75, 85, '2027-10-31'),
+    (4, 'Amlodipine 5 mg', 'Blood-pressure control tablets', 28.00, 150, '2028-01-31'),
+    (5, 'Paracetamol 500 mg', 'Pain-relief and fever-reduction tablets', 8.50, 300, '2028-03-31');
+
+INSERT INTO Prescription
+    (Prescription_ID, Treatment_ID, Medicine_ID, Dosage, Frequency, Duration_Days, Instructions, Quantity)
+VALUES
+    (1, 1, 1, 'One capsule', 'Once weekly', 56, 'Take after a main meal', 8),
+    (2, 2, 2, 'One capsule', 'Three times daily', 7, 'Complete the full course', 21),
+    (3, 3, 3, 'Apply a thin layer', 'Twice daily', 10, 'For external use only', 1),
+    (4, 4, 4, 'One tablet', 'Once daily', 30, 'Take at the same time each day', 30),
+    (5, 5, 5, 'Two tablets', 'Every eight hours when needed', 5, 'Do not exceed eight tablets in 24 hours', 20);
