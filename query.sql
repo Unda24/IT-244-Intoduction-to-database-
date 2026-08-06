@@ -168,3 +168,36 @@ CREATE TABLE Payment (
             (Payment_Status IN ('Partially Paid', 'Paid') AND Payment_Date IS NOT NULL)
         )
 ) ENGINE = InnoDB;
+-- Member: Mohammed Alhaily
+-- Task: Seed staff records, doctors, and administrative staff
+INSERT INTO Staff
+    (Staff_ID, First_Name, Last_Name, Phone, Email, Hire_Date)
+VALUES
+    (1, 'Khalid', 'Alqahtani', '0501234567', 'k.alqahtani@smartclinic.sa', '2021-02-14'),
+    (2, 'Noura', 'Alharbi', '0512345678', 'n.alharbi@smartclinic.sa', '2020-09-01'),
+    (3, 'Faisal', 'Alotaibi', '0523456789', 'f.alotaibi@smartclinic.sa', '2022-01-10'),
+    (4, 'Reem', 'Alghamdi', '0534567890', 'r.alghamdi@smartclinic.sa', '2019-06-23'),
+    (5, 'Saad', 'Alshammari', '0545678901', 's.alshammari@smartclinic.sa', '2023-03-05'),
+    (6, 'Huda', 'Alzahrani', '0556789012', 'h.alzahrani@smartclinic.sa', '2021-08-15'),
+    (7, 'Majed', 'Aldossari', '0567890123', 'm.aldossari@smartclinic.sa', '2020-11-20'),
+    (8, 'Abeer', 'Almutairi', '0578901234', 'a.almutairi@smartclinic.sa', '2022-05-18'),
+    (9, 'Turki', 'Alanazi', '0589012345', 't.alanazi@smartclinic.sa', '2023-07-02'),
+    (10, 'Lama', 'Alsubaie', '0590123456', 'l.alsubaie@smartclinic.sa', '2024-01-14');
+
+INSERT INTO Doctor
+    (Doctor_ID, License_Number, Specialization, Consultation_Fee, Room_Number)
+VALUES
+    (1, 'SCFHS-D-10001', 'Family Medicine', 250.00, 'A101'),
+    (2, 'SCFHS-D-10002', 'Pediatrics', 300.00, 'A102'),
+    (3, 'SCFHS-D-10003', 'Dermatology', 350.00, 'B201'),
+    (4, 'SCFHS-D-10004', 'Internal Medicine', 320.00, 'B202'),
+    (5, 'SCFHS-D-10005', 'Orthopedics', 400.00, 'C301');
+
+INSERT INTO Admin_Staff
+    (Admin_ID, Department, Position)
+VALUES
+    (6, 'Reception', 'Receptionist'),
+    (7, 'Finance', 'Accountant'),
+    (8, 'Medical Records', 'Records Officer'),
+    (9, 'Human Resources', 'HR Coordinator'),
+    (10, 'Administration', 'Clinic Supervisor');
