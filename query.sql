@@ -349,3 +349,35 @@ ORDER BY Appointment_Date;
     d.Specialization
 ORDER BY Appointment_Count DESC;
 
+DROP TRIGGER IF EXISTS trg_prescription_reduce_stock;
+
+DELIMITER $$
+
+CREATE TRIGGER trg_prescription_reduce_stock
+BEFORE INSERT ON Prescription
+FOR EACH ROW
+BEGIN
+    DECLARE available_stock INT;
+
+    SELECT Stock_Quantity
+    INTO available_stock
+    FROM Medicine
+    WHERE Medicine_ID = NEW.Medicine_ID;
+
+    IF available_stock IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'The selected medicine does not exist.';
+
+    ELSEIF NEW.Quantity > available_stock THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Insufficient medicine stock for this prescription.';
+
+    ELSE
+        UPDATE Medicine
+        SET Stock_Quantity = Stock_Quantity - NEW.Quantity
+        WHERE Medicine_ID = NEW.Medicine_ID;
+    END IF;
+END$$
+
+DELIMITER ;
+
