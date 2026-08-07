@@ -287,3 +287,36 @@ INNER JOIN Doctor AS d
 INNER JOIN Staff AS s
     ON d.Doctor_ID = s.Staff_ID
 ORDER BY a.Appointment_Date, a.Appointment_Time;
+SELECT
+    p.Patient_ID,
+    CONCAT(p.First_Name, ' ', p.Last_Name) AS Patient_Name,
+    t.Treatment_Cost
+FROM Patient AS p
+INNER JOIN Appointment AS a
+    ON p.Patient_ID = a.Patient_ID
+INNER JOIN Treatment AS t
+    ON a.Appointment_ID = t.Appointment_ID
+WHERE t.Treatment_Cost > (
+    SELECT AVG(Treatment_Cost)
+    FROM Treatment
+)
+ORDER BY t.Treatment_Cost DESC;
+SELECT
+    d.Doctor_ID,
+    CONCAT(s.First_Name, ' ', s.Last_Name) AS Doctor_Name,
+    d.Specialization,
+    COUNT(a.Appointment_ID) AS Appointment_Count,
+    ROUND(AVG(t.Treatment_Cost), 2) AS Average_Treatment_Cost
+FROM Doctor AS d
+INNER JOIN Staff AS s
+    ON d.Doctor_ID = s.Staff_ID
+LEFT JOIN Appointment AS a
+    ON d.Doctor_ID = a.Doctor_ID
+LEFT JOIN Treatment AS t
+    ON a.Appointment_ID = t.Appointment_ID
+GROUP BY
+    d.Doctor_ID,
+    s.First_Name,
+    s.Last_Name,
+    d.Specialization
+ORDER BY Appointment_Count DESC;
