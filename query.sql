@@ -168,8 +168,6 @@ CREATE TABLE Payment (
             (Payment_Status IN ('Partially Paid', 'Paid') AND Payment_Date IS NOT NULL)
         )
 ) ENGINE = InnoDB;
--- Member: Mohammed Alhaily
--- Task: Seed staff records, doctors, and administrative staff
 INSERT INTO Staff
     (Staff_ID, First_Name, Last_Name, Phone, Email, Hire_Date)
 VALUES
@@ -254,8 +252,6 @@ VALUES
     (3, 3, '2026-07-07', 350.00, 'Apple Pay', 'Paid', 'TXN-SA-20260707-003'),
     (4, 4, '2026-07-08', 160.00, 'Insurance', 'Partially Paid', 'TXN-SA-20260708-004'),
     (5, 5, NULL, 400.00, 'Cash', 'Pending', NULL);
-
--- UPDATE statement: Settle pending payment for Payment_ID = 5
 UPDATE Payment
 SET
     Payment_Date = '2026-07-10',
@@ -263,7 +259,31 @@ SET
     Payment_Status = 'Paid',
     Transaction_Reference = 'TXN-SA-20260710-005'
 WHERE Payment_ID = 5;
-
--- DELETE statement: Remove prescription record 5 for testing foreign keys
 DELETE FROM Prescription
 WHERE Prescription_ID = 5;
+SELECT
+    Appointment_ID,
+    Appointment_Date,
+    Appointment_Time,
+    Reason,
+    Status
+FROM Appointment
+WHERE Status = 'Completed'
+  AND Appointment_Date BETWEEN '2026-07-05' AND '2026-07-09'
+ORDER BY Appointment_Date, Appointment_Time;
+SELECT
+    a.Appointment_ID,
+    CONCAT(p.First_Name, ' ', p.Last_Name) AS Patient_Name,
+    CONCAT(s.First_Name, ' ', s.Last_Name) AS Doctor_Name,
+    d.Specialization,
+    a.Appointment_Date,
+    a.Appointment_Time,
+    a.Status
+FROM Appointment AS a
+INNER JOIN Patient AS p
+    ON a.Patient_ID = p.Patient_ID
+INNER JOIN Doctor AS d
+    ON a.Doctor_ID = d.Doctor_ID
+INNER JOIN Staff AS s
+    ON d.Doctor_ID = s.Staff_ID
+ORDER BY a.Appointment_Date, a.Appointment_Time;
