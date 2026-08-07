@@ -348,3 +348,4 @@ ORDER BY Appointment_Date;
     s.Last_Name,
     d.Specialization
 ORDER BY Appointment_Count DESC;
+
