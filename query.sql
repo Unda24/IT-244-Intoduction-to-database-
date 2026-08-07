@@ -317,6 +317,34 @@ LEFT JOIN Treatment AS t
 GROUP BY
     d.Doctor_ID,
     s.First_Name,
+    CREATE OR REPLACE VIEW Patient_Treatment_Payment_View AS
+SELECT
+    p.Patient_ID,
+    CONCAT(p.First_Name, ' ', p.Last_Name) AS Patient_Name,
+    a.Appointment_ID,
+    a.Appointment_Date,
+    CONCAT(s.First_Name, ' ', s.Last_Name) AS Doctor_Name,
+    d.Specialization,
+    t.Treatment_ID,
+    t.Diagnosis,
+    t.Treatment_Cost,
+    pay.Payment_Status,
+    pay.Payment_Method,
+    pay.Payment_Date
+FROM Patient AS p
+INNER JOIN Appointment AS a
+    ON p.Patient_ID = a.Patient_ID
+INNER JOIN Doctor AS d
+    ON a.Doctor_ID = d.Doctor_ID
+INNER JOIN Staff AS s
+    ON d.Doctor_ID = s.Staff_ID
+INNER JOIN Treatment AS t
+    ON a.Appointment_ID = t.Appointment_ID
+LEFT JOIN Payment AS pay
+    ON t.Treatment_ID = pay.Treatment_ID;
+SELECT *
+FROM Patient_Treatment_Payment_View
+ORDER BY Appointment_Date;
     s.Last_Name,
     d.Specialization
 ORDER BY Appointment_Count DESC;
