@@ -317,7 +317,11 @@ LEFT JOIN Treatment AS t
 GROUP BY
     d.Doctor_ID,
     s.First_Name,
-    CREATE OR REPLACE VIEW Patient_Treatment_Payment_View AS
+    s.Last_Name,
+    d.Specialization
+ORDER BY Appointment_Count DESC;
+
+CREATE OR REPLACE VIEW Patient_Treatment_Payment_View AS
 SELECT
     p.Patient_ID,
     CONCAT(p.First_Name, ' ', p.Last_Name) AS Patient_Name,
@@ -342,12 +346,10 @@ INNER JOIN Treatment AS t
     ON a.Appointment_ID = t.Appointment_ID
 LEFT JOIN Payment AS pay
     ON t.Treatment_ID = pay.Treatment_ID;
+
 SELECT *
 FROM Patient_Treatment_Payment_View
 ORDER BY Appointment_Date;
-    s.Last_Name,
-    d.Specialization
-ORDER BY Appointment_Count DESC;
 
 DROP TRIGGER IF EXISTS trg_prescription_reduce_stock;
 
